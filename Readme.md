@@ -4,7 +4,7 @@
 
 ### Tutorials
 
-I've written a complete tutorial series for this application on The CalliCoder Blog -
+ complete tutorial series for this application on The CalliCoder Blog -
 
 + [Part 1: Bootstrapping the Project and creating the basic domain models and repositories](https://www.callicoder.com/spring-boot-spring-security-jwt-mysql-react-app-part-1/)
 
