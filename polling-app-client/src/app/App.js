@@ -20,6 +20,7 @@ import LoadingIndicator from '../common/LoadingIndicator';
 import PrivateRoute from '../common/PrivateRoute';
 
 import { Layout, notification } from 'antd';
+import PollsGrid from '../poll/PollsGrid';
 const { Content } = Layout;
 
 class App extends Component {
@@ -106,6 +107,7 @@ class App extends Component {
                 <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
                 <Route path="/signup" component={Signup}></Route>
+                <Route path="/pollslist" component={PollsGrid}></Route>
                 <Route path="/users/:username" 
                   render={(props) => <Profile isAuthenticated={this.state.isAuthenticated} currentUser={this.state.currentUser} {...props}  />}>
                 </Route>
