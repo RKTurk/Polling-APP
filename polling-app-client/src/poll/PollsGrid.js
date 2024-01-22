@@ -27,20 +27,24 @@ const PollsGrid = () => {
 
   const gridOptions = {
     defaultColDef: {
-      flex: 1,
-      minWidth: 150,
       resizable: true,
     },
     pagination: true,
-    paginationPageSize: 10,
+    paginationPageSize: 20,
+  };
+  const onGridReady = (params) => {
+    params.api.sizeColumnsToFit();
   };
 
   return (
     <div className="ag-theme-alpine" style={{ height: 400, width: '100%' }}>
+      <h1 style={{ textAlign: 'center' }}>Polls List</h1>
       <AgGridReact
         columnDefs={columnDefs}
         rowData={rowData}
         gridOptions={gridOptions}
+        onGridReady={onGridReady}
+
       />
     </div>
   );
