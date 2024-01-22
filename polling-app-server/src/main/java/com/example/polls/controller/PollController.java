@@ -1,5 +1,6 @@
 package com.example.polls.controller;
 
+import com.example.polls.dto.PollDto;
 import com.example.polls.model.*;
 import com.example.polls.payload.*;
 import com.example.polls.repository.PollRepository;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/polls")
@@ -69,6 +71,11 @@ public class PollController {
                          @PathVariable Long pollId,
                          @Valid @RequestBody VoteRequest voteRequest) {
         return pollService.castVoteAndGetUpdatedPoll(pollId, voteRequest, currentUser);
+    }
+
+    @GetMapping("/data")
+    public ResponseEntity<List<PollDto>> getPollsData() {
+        return pollService.getPollsData();
     }
 
 }

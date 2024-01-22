@@ -1,5 +1,6 @@
 package com.example.polls.service;
 
+import com.example.polls.dto.PollDto;
 import com.example.polls.exception.BadRequestException;
 import com.example.polls.exception.ResourceNotFoundException;
 import com.example.polls.model.*;
@@ -15,16 +16,21 @@ import com.example.polls.util.AppConstants;
 import com.example.polls.util.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -272,4 +278,25 @@ public class PollService {
 
         return creatorMap;
     }
+    public ResponseEntity<List<PollDto>> getPollsData() {
+        try {
+            List<Object[]> pollsData = pollRepository.getPollsData();
+
+            List<PollDto> pollDtos = pollsData.stream()
+                    .map(row -> {
+                        PollDto pollDto = new PollDto();
+                        pollDto.setId(((BigInteger) row[0]).longValue());  // Cast to BigInteger and then to Long
+                        pollDto.setQuestion((String) row[1]);
+                        return pollDto;
+                    })
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity<>(pollDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
 }
